@@ -1,0 +1,30 @@
+<h2>Admin Panel - Manage Videos</h2>
+
+<!-- Add Video -->
+<div class="video-form">
+  <input type="text" placeholder="Video Title" [(ngModel)]="newVideo.videoTitle">
+  <input type="text" placeholder="Description" [(ngModel)]="newVideo.videoDescription">
+  <input type="text" placeholder="Video URL" [(ngModel)]="newVideo.videoUrl">
+  <input type="text" placeholder="Thumbnail URL" [(ngModel)]="newVideo.videoThumbnail">
+  <input type="text" placeholder="Duration" [(ngModel)]="newVideo.totalDuration">
+  <button (click)="addVideo()">Add Video</button>
+</div>
+
+<!-- Video List -->
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Description</th>
+    <th>Thumbnail</th>
+    <th>Actions</th>
+  </tr>
+  <tr *ngFor="let video of videos">
+    <td><input type="text" [(ngModel)]="video.videoTitle"></td>
+    <td><input type="text" [(ngModel)]="video.videoDescription"></td>
+    <td><img [src]="video.videoThumbnail" alt="Thumbnail" class="thumbnail"></td>
+    <td>
+      <button (click)="updateVideo(video)">Update</button>
+      <button (click)="deleteVideo(video.id)">Delete</button>
+    </td>
+  </tr>
+</table>

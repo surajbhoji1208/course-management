@@ -1,0 +1,2091 @@
+db.json
+{
+  "signup": [
+    {
+      "id": "1",
+      "name": "user123",
+      "email": "user123@gmail.com",
+      "password": "user123",
+      "address": "Pune",
+      "role": "user"
+    },
+    {
+      "id": "2",
+      "name": "admin",
+      "email": "admin@gmail.com",
+      "password": "admin123",
+      "address": "Pune",
+      "role": "admin"
+    }
+  ],
+  "login_users": [
+    {
+      "id": "1",
+      "email": "user123@gmail.com",
+      "password": "user123"
+    }
+  ],
+  "login_admins": [
+    {
+      "id": "2",
+      "email": "admin@gmail.com",
+      "password": "admin123"
+    }
+  ],
+  "courses": [
+    {
+      "id": "3b9a",
+      "name": "Java",
+      "course_desc": "Java is a full-stack development course.",
+      "image": "https://example.com/java-course.jpg",
+      "price": 999,
+      "old_price": 1499,
+      "progress": 0,
+      "chapters": [
+        {
+          "id": "ch1",
+          "title": "Introduction to Java",
+          "completed": false
+        }
+      ]
+    },
+    {
+      "id": "265a",
+      "name": "AI & ML",
+      "course_desc": "AI is the future of artificial intelligence.",
+      "image": "https://example.com/ai-course.jpg",
+      "price": 1299,
+      "old_price": 1999,
+      "progress": 0,
+      "chapters": [
+        {
+          "id": "ch1",
+          "title": "AI Basics",
+          "completed": false
+        }
+      ]
+    },
+    {
+      "id": 1741170177864,
+      "name": "Python",
+      "course_desc": "Python is full stack developer",
+      "courseImage": "https://www.google.com/imgres?q=angular%20course%20link&imgurl=https%3A%2F%2Fimg-c.udemycdn.com%2Fcourse%2F750x422%2F4706254_a820.jpg&imgrefurl=https%3A%2F%2Fwww.udemy.com%2Fcourse%2Fthe-complete-angular-course-beginner-to-advanced-2022%2F&docid=wIuaujHlND5e6M&tbnid=8PbXFWCbwKyG1M&vet=12ahUKEwjr6dr2052LAxXxmq8BHWBLAAMQM3oECBkQAA..i&w=750&h=422&hcb=2&ved=2ahUKEwjr6dr2052LAxXxmq8BHWBLAAMQM3oECBkQAA",
+      "price": 3500,
+      "old_price": 3000,
+      "progress": 0,
+      "chapters": []
+    }
+  ],
+  "users": [],
+  "chapters": [
+    {
+      "id": "102",
+      "course_id": "3b9a",
+      "name": "HTML Basics",
+      "desc": "Explore HTML tags, attributes, and document structure.",
+      "video": "https://www.youtube.com/embed/xyz123",
+      "watched": true,
+      "quiz": {
+        "id": 202,
+        "question": "Which HTML tag is used to create a hyperlink?",
+        "type": "MCQ",
+        "options": [
+          "<link>",
+          "<a>",
+          "<href>",
+          "<url>"
+        ],
+        "correct_answer": "<a>"
+      }
+    },
+    {
+      "id": "948",
+      "course_id": "",
+      "name": "HTML Node",
+      "desc": "HTML is Node5",
+      "watched": false,
+      "video": "",
+      "quiz": {
+        "id": 0,
+        "question": "",
+        "options": [],
+        "correct_answer": ""
+      }
+    },
+    {
+      "id": "12",
+      "course_id": "",
+      "name": "Java",
+      "desc": "Java is machine codeing language",
+      "watched": false,
+      "video": "",
+      "quiz": {
+        "id": 0,
+        "question": "",
+        "options": [],
+        "correct_answer": ""
+      }
+    },
+    {
+      "id": "406",
+      "course_id": "",
+      "name": "Python",
+      "desc": "Python is PL Programming",
+      "watched": false,
+      "video": "",
+      "quiz": {
+        "id": 0,
+        "question": "",
+        "options": [],
+        "correct_answer": ""
+      }
+    }
+  ],
+  "videos": [
+    {
+      "id": "6ded",
+      "videoTitle": "Artificial Intelligence",
+      "videoDescription": "Introduction to AI",
+      "videoUrl": "https://youtu.be/_Ah2ww7aHRk?si=JWAfeupQwC9EewUx",
+      "videoThumbnail": "https://example.com/ai-thumbnail.jpg",
+      "totalDuration": "4-5 min"
+    },
+    {
+      "id": "ae38",
+      "videoTitle": "java",
+      "videoDescription": "java is full stack language",
+      "videoUrl": "https://youtu.be/UmnCZ7-9yDY?si=Ni1oWYYcp0pcBLQs",
+      "videoThumbnail": "https://www.w3schools.com/java/",
+      "totalDuration": "5 month"
+    }
+  ]
+}
+------------------------------------------------------------------------------------------
+app.routing.module.ts
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { SignupComponent } from './signup/signup.component';
+import { LoginComponent } from './login/login.component';
+import { CourseDetailsComponent } from './user/course-details/course-details.component';
+import { HomeComponent } from './user/home/home.component';
+import { UserlayoutComponent } from './user/userlayout/userlayout.component';
+import { AdminlayoutComponent } from './admin/adminlayout/adminlayout.component';
+import { AddCourseComponent } from './admin/add-course/add-course.component';
+import { AuthGuard } from './services/auth.guard';
+import { MycourseComponent } from './user/mycourse/mycourse.component';
+import { JavaCourseComponent } from './java-course/java-course.component';
+import { VideoComponent } from './admin/video/video.component';
+import { VideoDisplayComponent } from './user/video-display/video-display.component';
+import { UserCourseComponent } from './user/user-course/user-course.component';
+
+
+
+const routes: Routes = [
+  {
+    path: '',
+    redirectTo: '/login',
+    pathMatch: 'full'
+  },
+  {
+    path: 'signup',
+    component: SignupComponent
+  },
+  {
+    path: 'login',
+
+    component: LoginComponent
+  },
+
+  {
+    path: '',
+    component: UserlayoutComponent,
+    canActivate: [AuthGuard],            //user
+    children: [
+      {
+        path: 'home',
+        component: HomeComponent
+      },
+      {
+        path: 'course-details',
+        component: CourseDetailsComponent
+      },
+      {
+        path: 'mycourse',
+        component: MycourseComponent
+      },
+      {
+        path: 'video-display',
+        component: VideoDisplayComponent
+      },
+      {
+        path: 'user-course',
+        component: UserCourseComponent
+      },
+    ]
+  },
+  {
+    path: '',
+    component: AdminlayoutComponent,            //admin
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: 'add-course',
+        component: AddCourseComponent
+      },
+      {
+        path: 'java-course',
+        component: JavaCourseComponent
+      },
+      {
+        path: 'video',
+        component: VideoComponent
+      }
+      
+
+    ]
+  },
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+--------------------------------------------------------------------------------------------
+app.module.ts
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { HomeComponent } from './user/home/home.component';
+import { CourseDetailsComponent } from './user/course-details/course-details.component';
+import { LoginComponent } from './login/login.component';
+import { UserlayoutComponent } from './user/userlayout/userlayout.component';
+import { AdminlayoutComponent } from './admin/adminlayout/adminlayout.component';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SignupComponent } from './signup/signup.component';
+import { MycourseComponent } from './user/mycourse/mycourse.component';
+import { JavaCourseComponent } from './java-course/java-course.component';
+import { VideoComponent } from './admin/video/video.component';
+import { VideoDisplayComponent } from './user/video-display/video-display.component';
+import { UserCourseComponent } from './user/user-course/user-course.component';
+import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { SafeUrlPipe } from './services/safe-url.pipe';
+import { VideoService } from './services/video.service';
+import { AddCourseComponent } from './admin/add-course/add-course.component'; // ✅ Import standalone component
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    CourseDetailsComponent,
+    SignupComponent,
+    LoginComponent,
+    UserlayoutComponent,
+    AdminlayoutComponent,
+    MycourseComponent,
+    JavaCourseComponent,
+    VideoComponent,
+    VideoDisplayComponent,
+    SafeUrlPipe,
+    UserCourseComponent,
+    AddCourseComponent 
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule,
+    CommonModule,
+    RouterModule,
+    // ✅ Import standalone component here
+  ],
+  providers: [VideoService],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+------------------------------------------------------------------------------------------
+(Services)auth-guard.services.ts
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
+
+  constructor(private router: Router) {}
+
+  isAuthenticated(): boolean {
+    return !!localStorage.getItem('localUserData') || !!localStorage.getItem('localAdminData');
+  }
+
+  logout() {
+    localStorage.removeItem('localUserData');
+    localStorage.removeItem('localAdminData');
+    this.router.navigate(['/login']);
+  }
+}
+----------------------------------------------------------------------------------------------
+auth.guard.ts
+import { Injectable } from '@angular/core';
+import { CanActivate, Router } from '@angular/router';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthGuard implements CanActivate {
+  constructor(private router: Router) {}
+
+  canActivate(): boolean {
+    const user = localStorage.getItem('localUserData');
+    const admin = localStorage.getItem('localAdminData');
+
+    if (user || admin) {
+      return true; // Allow navigation
+    } else {
+      this.router.navigate(['/login']); // Redirect to login if not authenticated
+      return false;
+    }
+  }
+}
+---------------------------------------------------------------------------------------------
+course.services.ts
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class CourseService {
+  private apiUrl = 'http://localhost:3000/courses'; // JSON Server URL
+
+  constructor(private http: HttpClient) {}
+
+  getCourses(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
+  }
+
+  createCourse(course: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl, course); // Ensure Course ID is stored
+  }
+
+  updateCourse(id: string, course: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${id}`, course);
+  }
+
+  // deleteCourse(id: string): Observable<any> {
+  //   return this.http.delete<any>(`${this.apiUrl}/${id}`);
+  // }
+
+  deleteCourse(courseId: number) {
+    return this.http.delete(`http://localhost:3000/courses/${courseId}`);
+  }
+  
+}
+--------------------------------------------------------------------------------------------
+safe-url.pipe.ts
+
+import { Pipe, PipeTransform } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+
+@Pipe({
+  name: 'safeUrl',
+  standalone: false
+})
+export class SafeUrlPipe implements PipeTransform {
+  constructor(private sanitizer: DomSanitizer) {}
+
+  transform(url: string): SafeResourceUrl {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+
+}
+---------------------------------------------------------------------------------------------
+user.service.ts
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class UserService {
+
+  constructor() { }
+}
+---------------------------------------------------------------------------------------------
+video.service.ts
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/internal/Observable';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class VideoService {
+
+  private apiUrl = 'http://localhost:3000/videos';
+
+  constructor(private http: HttpClient) {}
+
+  getVideos(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
+  }
+
+  addVideo(video: any): Observable<any> {
+    return this.http.post(this.apiUrl, video);
+  }
+
+  deleteVideo(id: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
+}
+---------------------------------------------------------------------------------------------
+(admin)add-course.component.html
+<div class="admin-container">
+  <h2>Create Course</h2>
+  <form (ngSubmit)="createCourse()">
+    <label>Course Name</label>
+    <input type="text" [(ngModel)]="courseName" name="courseName" required>
+
+    <label>Course Description</label>
+    <input type="text" [(ngModel)]="courseDesc" name="courseDesc" required>
+
+    <label>Course Image URL</label>
+    <input type="text" [(ngModel)]="courseImage" name="courseImage" required>
+
+    <label>Price</label>
+    <input type="number" [(ngModel)]="coursePrice" name="coursePrice" required>
+
+    <label>Old Price</label>
+    <input type="number" [(ngModel)]="courseOldPrice" name="courseOldPrice">
+
+    <button type="submit">Create Course</button>
+  </form>
+
+  <h2>Manage Courses</h2>
+  <div *ngIf="courses.length > 0; else noCourses">
+    <ul>
+      <li *ngFor="let course of courses">
+        <div class="course-card">
+          <img [src]="course.courseImage" alt="Course Image" class="course-img">
+          <div class="course-content">
+            <h3>{{ course.name }}</h3>
+            <p>{{ course.course_desc }}</p>
+
+            <div class="course-info">
+              <span class="price">₹{{ course.price }}</span>
+              <span class="old-price">₹{{ course.old_price }}</span>
+            </div>
+
+            <div class="actions">
+              <button (click)="editCourse(course)">Edit</button>
+              <button (click)="deleteCourse(course.id)">Delete</button>
+              <button routerLink="/java-course">View Details</button>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <ng-template #noCourses>
+    <p>No courses available.</p>
+  </ng-template>
+</div>
+---------------------------------------------------------------------------------------------
+add-course.component.ts
+import { Component } from '@angular/core';
+import { CourseService } from '../../services/course.service';
+//import { v4 as uuidv4 } from 'uuid';
+
+
+@Component({
+  selector: 'app-add-course',
+  standalone: false,
+  templateUrl: './add-course.component.html',
+  styleUrls: ['./add-course.component.css']
+})
+export class AddCourseComponent {
+  courseName = '';
+  courseDesc = '';
+  courseImage = '';
+  coursePrice: number = 0;
+  courseOldPrice: number = 0;
+  courses: any[] = [];
+  http: any;
+
+  constructor(private courseService: CourseService) {}
+
+  ngOnInit() {
+    this.loadCourses();
+  }
+
+  loadCourses() {
+    this.courseService.getCourses().subscribe((data) => {
+      this.courses = data;
+    });
+  }
+
+  createCourse() {
+    const newCourse = {
+      id: new Date().getTime(), // Temporary unique ID for JSON server
+      name: this.courseName,
+      course_desc: this.courseDesc,
+      courseImage: this.courseImage,
+      price: this.coursePrice,
+      old_price: this.courseOldPrice,
+      progress: 0,
+      chapters: []
+    };
+  
+    this.courseService.createCourse(newCourse).subscribe(() => {
+      alert('Course created successfully!');
+      this.loadCourses();
+    });
+  }
+  
+  editCourse(course: any) {
+    console.log('Editing course:', course);
+  }
+
+  deleteCourse(courseId: number) {
+    this.courseService.deleteCourse(courseId).subscribe(() => {
+      alert('Course deleted successfully!');
+      this.loadCourses();
+    });
+  }
+
+  // deleteCourse(courseId: number) {
+  //   if (!courseId) {
+  //     console.error('Error: courseId is undefined!');
+  //     return;
+  //   }
+  //   return this.http.delete(`http://localhost:3000/courses/${courseId}`);
+  // }
+  
+}
+--------------------------------------------------------------------------------------------
+add-course.component.css
+.admin-container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+h2 {
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+input {
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  margin-top: 10px;
+  padding: 8px;
+  border: none;
+  cursor: pointer;
+  background: #007bff;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+.course-card {
+  display: flex;
+  background: #f8f8f8;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.course-img {
+  width: 120px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.course-content {
+  padding-left: 10px;
+}
+
+.course-info {
+  display: flex;
+  gap: 10px;
+}
+
+.price {
+  font-size: 18px;
+  color: #28a745;
+  font-weight: bold;
+}
+
+.old-price {
+  text-decoration: line-through;
+  color: #888;
+  font-size: 14px;
+}
+
+.rating {
+  font-size: 14px;
+  color: #ff9800;
+}
+
+.actions {
+  margin-top: 10px;
+}
+
+.actions button {
+  background: #dc3545;
+}
+
+.actions button:hover {
+  background: #b02a37;
+}
+-------------------------------------------------------------------------------------------------
+adminlayout.component.html
+<header>
+    <nav class="navbar navbar-light bg-dark">
+      <ul class="nav justify-content-start">
+        <li class="nav-item">
+          <small class="me-3 text-light">
+            <i class="bi bi-geo-alt"></i> Pimpri Chinchwad New Town, Software Development Pune, Maharashtra
+          </small>
+        </li>
+        <li class="nav-item">
+          <small class="me-3 text-light">
+            <i class="bi bi-telephone"></i> +91 9970584464
+          </small>
+        </li>
+        <li class="nav-item">
+          <small class="text-light">
+            <i class="bi bi-envelope"></i> Voidmaingmail.com
+          </small>
+        </li>
+  
+        <li class="nav-item">
+          <a class="nav-link text-light" href="/signup">Signup</a>
+        </li>
+        <li class="nav-item">
+  
+          <a class="nav-link text-light" href="/login">Login</a>
+        </li>
+  
+        <!-- <button routerLink="/login" class="btn btn-link">Logout</button> -->
+        <button (click)="logout()">Logout</button>
+
+  
+        <div class="search-bar">
+          <input type="text" placeholder="Search..." />
+          <button>🔍</button>
+        </div>
+      </ul>
+    </nav>
+  </header>
+  
+  <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+    <a class="navbar-brand text-light" href="#">Void Main</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <ul class="navbar-nav mx-auto">
+        
+        <li class="nav-item">
+          <a class="nav-link text-light" routerLink="/add-course">Add Course</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" routerLink="/add-quiz">Add quiz</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" routerLink="/webinar">Webinar</a>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link text-light" routerLink="/feedbacks">Feedbacks</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" routerLink="/contact">Contact</a>
+        </li> -->
+  
+      </ul>
+    </div>
+  </nav>
+  
+  <router-outlet></router-outlet>
+  
+  <footer class="bg-dark text-light py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4">
+          <h3>Coding Yaar</h3>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+          <p>09876543221</p>
+          <p>1234567890</p>
+        </div>
+        <div class="col">
+          <h4>Menu</h4>
+          <ul class="list-unstyled">
+            <li><a href="#" class="text-decoration-none text-light">Link</a></li>
+            <li><a href="#" class="text-decoration-none text-light">Link</a></li>
+            <li><a href="#" class="text-decoration-none text-light">Link</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 text-lg-end">
+          <h4>Social Media</h4>
+          <a href="#" class="text-decoration-none text-light"><i class="bi bi-envelope fs-4 me-2"></i></a>
+          <a href="#" class="text-decoration-none text-light"><i class="bi bi-instagram fs-4 me-2"></i></a>
+        </div>
+      </div>
+      <div class="d-flex justify-content-between">
+        <p>2024 Coding Yaar. All Rights Reserved.</p>
+        <div>
+          <a href="#" class="text-decoration-none text-light me-3">Terms of Use</a>
+          <a href="#" class="text-decoration-none text-light">Privacy Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+-----------------------------------------------------------------------------------------------
+adminlayout.component.ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-adminlayout',
+  standalone: false,
+  templateUrl: './adminlayout.component.html',
+  styleUrl: './adminlayout.component.css'
+})
+export class AdminlayoutComponent {
+router: any;
+course: any;
+//logout:any;
+
+
+logout() {
+  localStorage.removeItem('localUserData');
+  localStorage.removeItem('localAdminData');
+  this.router.navigateByUrl("/login");
+}
+}
+-------------------------------------------------------------------------------------------
+adminlayout.component.css
+
+  /* Media Queries */
+  
+  /* For screens smaller than 768px (Tablets and below) */
+  @media (max-width: 768px) {
+    .navbar-nav {
+      text-align: center;
+    }
+  
+    .search-bar input {
+      width: 150px;
+    }
+  
+    footer .container {
+      max-width: 100%;
+    }
+  
+    footer .col-lg-4,
+    footer .col-lg-3 {
+      margin-bottom: 20px;
+    }
+  
+    footer .col-lg-3.text-lg-end {
+      text-align: center;
+    }
+    
+    footer .d-flex {
+      flex-direction: column;
+      text-align: center;
+    }
+    
+    footer .d-flex div {
+      margin-top: 10px;
+    }
+  }
+  
+  /* For screens smaller than 480px (Mobile Devices) */
+  @media (max-width: 480px) {
+    .navbar-nav .nav-item {
+      padding-right: 10px;
+    }
+  
+    .navbar-brand {
+      font-size: 18px;
+    }
+  
+    .search-bar input {
+      width: 120px;
+    }
+  
+    footer h3, footer h4 {
+      font-size: 18px;
+    }
+  
+    footer p {
+      font-size: 14px;
+    }
+  
+    footer .d-flex {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    footer .d-flex div {
+      margin-top: 10px;
+    }
+  }
+--------------------------------------------------------------------------------------------------------
+video.component.html
+
+<h2>Admin Panel - Manage Videos</h2>
+
+<!-- Add Video -->
+<div class="video-form">
+  <input type="text" placeholder="Video Title" [(ngModel)]="newVideo.videoTitle">
+  <input type="text" placeholder="Description" [(ngModel)]="newVideo.videoDescription">
+  <input type="text" placeholder="Video URL" [(ngModel)]="newVideo.videoUrl">
+  <input type="text" placeholder="Thumbnail URL" [(ngModel)]="newVideo.videoThumbnail">
+  <input type="text" placeholder="Duration" [(ngModel)]="newVideo.totalDuration">
+  <button (click)="addVideo()">Add Video</button>
+</div>
+
+<!-- Video List -->
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Description</th>
+    <th>Thumbnail</th>
+    <th>Actions</th>
+  </tr>
+  <tr *ngFor="let video of videos">
+    <td><input type="text" [(ngModel)]="video.videoTitle"></td>
+    <td><input type="text" [(ngModel)]="video.videoDescription"></td>
+    <td><img [src]="video.videoThumbnail" alt="Thumbnail" class="thumbnail"></td>
+    <td>
+      <button (click)="updateVideo(video)">Update</button>
+      <button (click)="deleteVideo(video.id)">Delete</button>
+    </td>
+  </tr>
+</table>
+---------------------------------------------------------------------------------------------
+video.component.ts
+import { Component, OnInit } from '@angular/core';
+
+import { HttpClient } from '@angular/common/http';
+import { VideoService } from '../../services/video.service';
+
+@Component({
+  selector: 'app-video',
+  standalone: false,
+  templateUrl: './video.component.html',
+  styleUrl: './video.component.css'
+})
+export class VideoComponent {
+  
+  videos: any[] = [];
+  newVideo = { videoTitle: '', videoDescription: '', videoUrl: '', videoThumbnail: '', totalDuration: '' };
+  jsonServerUrl = 'http://localhost:3000/videos';  // JSON Server URL
+
+  constructor(private http: HttpClient) {}
+
+  ngOnInit() {
+    this.fetchVideos();
+  }
+
+  fetchVideos() {
+    this.http.get<any[]>(this.jsonServerUrl).subscribe(data => {
+      this.videos = data;
+    });
+  }
+
+  addVideo() {
+    this.http.post(this.jsonServerUrl, this.newVideo).subscribe(() => {
+      this.fetchVideos();
+      this.newVideo = { videoTitle: '', videoDescription: '', videoUrl: '', videoThumbnail: '', totalDuration: '' };
+    });
+  }
+
+  deleteVideo(id: number) {
+    this.http.delete(`${this.jsonServerUrl}/${id}`).subscribe(() => {
+      this.fetchVideos();
+    });
+  }
+
+  updateVideo(video: any) {
+    this.http.put(`${this.jsonServerUrl}/${video.id}`, video).subscribe(() => {
+      this.fetchVideos();
+    });
+  }
+
+  }
+---------------------------------------------------------------------------------------------
+video.component.css
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+  }
+  
+  h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Video Form */
+  .video-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .video-form input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  .video-form button {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 5px;
+  }
+  
+  .video-form button:hover {
+    background: #218838;
+  }
+  
+  /* Table Styles */
+  table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  th {
+    background: #007bff;
+    color: white;
+  }
+  
+  td input {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  td img.thumbnail {
+    width: 80px;
+    height: 50px;
+    border-radius: 5px;
+    object-fit: cover;
+  }
+  
+  td button {
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 5px;
+    border-radius: 5px;
+  }
+  
+  td button:first-child {
+    background: #ffc107;
+    color: black;
+  }
+  
+  td button:first-child:hover {
+    background: #e0a800;
+  }
+  
+  td button:last-child {
+    background: #dc3545;
+    color: white;
+  }
+  
+  td button:last-child:hover {
+    background: #c82333;
+  }
+---------------------------------------------------------------------------------------------------
+java-course.component.html
+<div class="container mt-5">
+    <h2 class="text-center">Admin Panel - Manage Chapters</h2>
+    
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Course ID</th>
+                <th>Chapter Name</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let chapter of chapters">
+                <td>{{ chapter.id }}</td>
+                <td>{{ chapter.course_id }}</td>
+                <td><input [(ngModel)]="chapter.name" /></td>
+                <td><input [(ngModel)]="chapter.desc" /></td>
+                <td>
+                    <button class="btn btn-success btn-sm" (click)="updateChapter(chapter)">Save</button>
+                    <button class="btn btn-danger btn-sm" (click)="deleteChapter(chapter.id)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button class="btn btn-primary mt-3" (click)="addChapter()">Add New Chapter</button>
+    <button routerLink="/video">view Video</button>
+</div>
+------------------------------------------------------------------------------------------------
+java.course.component.css
+.container {
+    max-width: 800px;
+}
+
+table {
+    width: 100%;
+}
+
+input {
+    width: 100%;
+    border: 1px solid #ddd;
+    padding: 5px;
+}
+-----------------------------------------------------------------------------------------------
+java.course.component.ts
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-java-course',
+  standalone: false,
+  templateUrl: './java-course.component.html',
+  styleUrl: './java-course.component.css'
+})
+export class JavaCourseComponent implements OnInit{
+  chapters: any[] = [];
+
+  constructor(private http: HttpClient) {}
+
+  ngOnInit(): void {
+    this.fetchChapters();
+  }
+
+  fetchChapters() {
+    this.http.get<any[]>('http://localhost:3000/chapters').subscribe(data => {
+      this.chapters = data;
+    });
+  }
+
+  updateChapter(chapter: any) {
+    this.http.put(`http://localhost:3000/chapters/${chapter.id}`, chapter)
+      .subscribe(() => alert('Chapter Updated!'));
+  }
+
+  deleteChapter(id: number) {
+    this.http.delete(`http://localhost:3000/chapters/${id}`)
+      .subscribe(() => {
+        this.chapters = this.chapters.filter(ch => ch.id !== id);
+      });
+  }
+
+  addChapter() {
+    const newChapter = {
+      id: Math.floor(Math.random() * 1000),
+      course_id: '',
+      name: '',
+      desc: '',
+      watched: false,
+      video: '',
+      quiz: { id: 0, question: '', options: [], correct_answer: '' }
+    };
+
+    this.http.post('http://localhost:3000/chapters', newChapter)
+      .subscribe(() => {
+        this.chapters.push(newChapter);
+      });
+  } 
+}
+----------------------------------------------------------------------------------------------
+login.component.html
+
+
+<div class="join-us-container"
+  style="background: url('https://img.pikbest.com/ai/illus_our/20230427/62fea655dfec70ab99507220639ac96c.jpg') no-repeat center center fixed; background-size: cover;">
+
+  <div class="background">
+    <div class="shape"></div>
+    <div class="shape"></div>
+  </div>
+
+  <h3>Login Here</h3>
+
+  <label for="email">Email</label>
+  <input type="text" [(ngModel)]="loginObj.email" placeholder="Email" id="email">
+
+  <label for="password">Password</label>
+  <input type="password" name="password" [(ngModel)]="loginObj.password" placeholder="Password" id="password">
+
+  <button style="color: black" (click)="onLogin()">Log In</button>
+
+  <a routerLink="/signup">New user? Click to signup!!</a>
+</div>
+------------------------------------------------------------------------------------------------
+login.component.css
+/* General styling for the container */
+.join-us-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    background: url('https://img.pikbest.com/ai/illus_our/20230427/62fea655dfec70ab99507220639ac96c.jpg') no-repeat center center fixed;
+    background-size: cover;
+    font-family: Arial, sans-serif;
+    color: white;
+    overflow: hidden;
+  }
+  
+  /* Styling for the login box */
+  .join-us-container .login-box {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+    width: 350px;
+    text-align: center;
+  }
+  
+  .join-us-container h3 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #ffd700;
+  }
+  
+  .join-us-container label {
+    display: block;
+    text-align: left;
+    font-size: 1rem;
+    margin: 10px 0 5px;
+  }
+  
+  .join-us-container input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+  }
+  
+  .join-us-container button {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: #ffd700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .join-us-container button:hover {
+    background-color: #ffc107;
+  }
+  
+  .join-us-container a {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #ffd700;
+    text-decoration: none;
+  }
+  
+  .join-us-container a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .join-us-container .login-box {
+      width: 90%;
+      padding: 20px;
+    }
+  
+    .join-us-container h3 {
+      font-size: 1.5rem;
+    }
+  
+    .join-us-container input,
+    .join-us-container button {
+      font-size: 0.9rem;
+      padding: 10px;
+    }
+  
+    .join-us-container a {
+      font-size: 0.8rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .join-us-container {
+      padding: 20px;
+    }
+  
+    .join-us-container h3 {
+      font-size: 1.2rem;
+    }
+  
+    .join-us-container input,
+    .join-us-container button {
+      font-size: 0.8rem;
+      padding: 8px;
+    }
+  }
+----------------------------------------------------------------------------------------------------
+login.component.ts
+
+import { HttpClient } from '@angular/common/http';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-login',
+  standalone: false,
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.css'
+})
+export class LoginComponent {
+
+  loginObj: any = {
+    UserName: '',
+    Password: '',
+  };
+
+  constructor(private router: Router, private http: HttpClient) { }
+
+  ngOnInit(): void { }
+
+  onLogin() {
+    if (!this.loginObj.email || !this.loginObj.password) {
+      alert("Please enter email and password!");
+      return;
+    }
+
+    // Check in the users' API
+    this.http.get<any>("http://localhost:3000/login_users").subscribe({
+      next: (users) => {
+        const user = users.find((u: any) => 
+          u.email === this.loginObj.email && u.password === this.loginObj.password
+        );
+
+        if (user) {
+          localStorage.setItem('localUserData', JSON.stringify(user));
+          this.router.navigateByUrl("/home");  // Redirect to user dashboard
+        } else {
+          // Check in the admins' API
+          this.http.get<any>("http://localhost:3000/login_admins").subscribe({
+            next: (admins) => {
+              const admin = admins.find((a: any) => 
+                a.email === this.loginObj.email && a.password === this.loginObj.password
+              );
+
+              if (admin) {
+                localStorage.setItem('localAdminData', JSON.stringify(admin));
+                this.router.navigateByUrl("/add-course");  // Redirect to admin dashboard
+              } else {
+                alert("Invalid Credentials! Please try again.");
+              }
+            },
+            error: () => {
+              alert("An error occurred during admin login. Please try again.");
+            }
+          });
+        }
+      },
+      error: () => {
+        alert("An error occurred during user login. Please try again.");
+      }
+    });
+  }
+
+  logout() {
+    localStorage.removeItem('localUserData');
+    localStorage.removeItem('localAdminData');
+    this.router.navigateByUrl("/login");
+  }
+
+}
+--------------------------------------------------------------------------------------------------------------
+signup.component.html
+<!-- <div class="join-us-container"
+ style="background: url('https://img.pikbest.com/ai/illus_our/20230427/62fea655dfec70ab99507220639ac96c.jpg') no-repeat center center fixed; background-size: cover;">  -->
+ <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div>
+          <h1>Sign Up</h1>
+          <h6>Register Youself!!</h6>
+        </div>
+
+        <form [formGroup]="signupForm" (ngSubmit)="signUp()">
+          <div class="form-group">
+            <label for="exampleInputName">Name</label>
+            <input formcontrolName="fullname" type="text" class="form-control" id="exampleInputName" placeholder="Name">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputMobile">Mobile</label>
+            <input formcontrolName="mobile" type="number" class="form-control" id="exampleInputMobile"
+              placeholder="Mobile">
+          </div>
+
+          <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input formcontrolName="email" type="email" class="form-control" id="exampleInputEmail1"
+              aria-describedby="email" placeholder="Enter email">
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input formcontrolName="password" type="password" class="form-control" id="exampleInputPassword1"
+              placeholder="Password">
+          </div>
+
+          <button type="submit" class="btn btn-primary">Sign Up</button>
+        </form>
+        <a routerLink="/login">Already registered? Click to Login!!</a>
+      </div>
+    </div>
+  </div>
+------------------------------------------------------------------------------------------------------------------------------------
+signup.component.ts
+import { HttpClient } from '@angular/common/http';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-signup',
+  standalone: false,
+  templateUrl: './signup.component.html',
+  styleUrl: './signup.component.css'
+})
+export class SignupComponent {
+
+  public signupForm!:FormGroup;
+
+
+  constructor( private fromBuilder :FormBuilder,private http:HttpClient,private router:Router){ }
+
+  ngOnInit():void{
+this.signupForm= this.fromBuilder.group({
+  fullname:[''],
+  email:[''],
+  password:[''],
+  mobile:['']
+})
+}
+
+signUp(){
+this.http.post<any>("http://localhost:3000/signup",this.signupForm.value).subscribe(_res=>{
+  alert("Signup Successfull");
+  this.signupForm.reset();
+  this.router.navigate(['login']);
+},err=>{
+  alert("Something went wrong")
+})
+
+}
+}
+---------------------------------------------------------------------------------------------------------------------------
+USER(course-deatils.component.html)
+<div class="container">
+  <h2 class="mb-4">Popular Courses</h2>
+
+  <div class="row">
+    <div *ngFor="let course of courses" class="col-md-3">
+      <div class="card course-card">
+        <img [src]="course.image" class="card-img-top" alt="Course Image">
+        <div class="card-body">
+          <h5 class="card-title">{{ course.name }}</h5>
+          <p class="card-text">{{ course.course_desc }}</p>
+          <div class="d-flex justify-content-between align-items-center">
+            <span class="price">₹{{ course.price }}</span>
+            <span class="old-price">₹{{ course.old_price }}</span>
+          </div>
+          <div class="ratings">
+            ⭐ {{ course.rating }} ({{ course.reviews }})
+          </div>
+          <!-- <a [routerLink]="['/course', course.id]" class="btn btn-primary">View Details</a> -->
+          <button routerLink="/mycourse">View Details</button>
+         
+         
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+-------------------------------------------------------------------------------------------------------
+(course-deatails.component.css)
+/* Container styles */
+.courses-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Courses Wrapper */
+.courses-wrapper {
+  display: flex;
+  gap: 15px;
+  overflow-x: auto;  /* Horizontal scroll */
+  padding-bottom: 10px;
+}
+
+/* Course Card */
+.course-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  width: 270px; /* Fixed width */
+  min-width: 270px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.course-card:hover {
+  transform: scale(1.05);
+}
+
+/* Course Image */
+.course-image {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+
+/* Course Details */
+.course-details {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.course-title {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.course-desc {
+  font-size: 14px;
+  color: #666;
+  margin: 5px 0;
+}
+
+/* Price and Ratings */
+.course-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.course-price {
+  font-size: 18px;
+  font-weight: bold;
+  color: #28a745;
+}
+
+.old-price {
+  text-decoration: line-through;
+  color: #888;
+  font-size: 14px;
+}
+
+.ratings {
+  font-size: 14px;
+  color: #ff9800;
+  margin: 5px 0;
+}
+
+/* Tags */
+.course-tags {
+  display: flex;
+  gap: 5px;
+}
+
+.premium, .bestseller {
+  font-size: 12px;
+  padding: 5px 8px;
+  border-radius: 5px;
+  color: white;
+}
+
+.premium {
+  background-color: #6a0dad;
+}
+
+.bestseller {
+  background-color: #1abc9c;
+}
+-----------------------------------------------------------------------------------------------
+(course-details.component.ts)
+import { Component, OnInit } from '@angular/core';
+//import { ActivatedRoute } from '@angular/router';
+import { CourseService } from '../../services/course.service';
+import { ActivatedRoute } from '@angular/router';
+
+@Component({
+  selector: 'app-course-details',
+  standalone: false,
+  templateUrl: './course-details.component.html',
+  styleUrl: './course-details.component.css'
+})
+export class CourseDetailsComponent implements OnInit {
+  courses: any[] = [];
+  course: any;
+  selectedCourse: any;
+  courseId!: string;
+
+
+  constructor(private route: ActivatedRoute, private courseService: CourseService) {}
+ 
+ 
+  ngOnInit(): void {
+    this.loadCourses();
+    
+  }
+
+  // viewCourseDetails(course: any) {
+  //   this.selectedCourse = course;
+  // }
+
+  loadCourses(): void {
+    this.courseService.getCourses().subscribe((data: any) => {
+      this.courses = data;
+    }, (error: any) => {
+      console.error("Error fetching courses:", error);
+    });
+  }
+
+  }
+---------------------------------------------------------------------------------------------------------------
+(mycourse.component.html)
+<!-- Sidebar -->
+<div class="sidebar">
+    <h5 class="text-center">Course Videos</h5>
+    <ul class="list-group list-group-flush">
+        <li *ngFor="let chapter of chapters" class="list-group-item bg-transparent">
+            <a href="#" class="text-light" (click)="selectChapter(chapter)">
+                {{ chapter.id }}. {{ chapter.name }}
+            </a>
+            <span class="badge float-end" [ngClass]="{'bg-success': chapter.watched, 'bg-warning': !chapter.watched}">
+                {{ chapter.watched ? 'Watched' : 'New' }}
+            </span>
+        </li>
+    </ul>
+</div>
+
+
+
+<!-- Main Content -->
+<div class="main-content">
+    <div class="container">
+        <h3 class="mb-4">Now Playing: {{ selectedChapter?.name }}</h3>
+        <div class="ratio ratio-16x9">
+            <iframe *ngIf="selectedChapter" [src]="selectedChapter.video" frameborder="0" allowfullscreen></iframe>
+        </div>
+
+        <!-- <button routerLink="/video-display">See Videos</button> -->
+
+
+        <h2>Available Course Videos</h2>
+
+<div class="video-list">
+  <div class="video-item" *ngFor="let video of videos">
+    <h3>{{ video.videoTitle }}</h3>
+    <p>{{ video.videoDescription }}</p>
+    <video width="560" height="315" controls>
+      <source [src]="video.videoUrl" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+</div> 
+
+
+        <!-- Video Description -->
+        <div class="video-description mt-4">
+            <h5>Lesson Description</h5>
+            <p>{{ selectedChapter?.desc }}</p>
+            <hr>
+            <h6>Course Progress</h6>
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" 
+                     [style.width]="progress + '%'" aria-valuenow="25" 
+                     aria-valuemin="0" aria-valuemax="100">
+                    {{ progress }}%
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+-------------------------------------------------------------------------------------------------------------
+(mycourse.component.css)
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: #222;
+    color: white;
+    padding: 15px;
+    overflow-y: auto; /* Sidebar itself can scroll if content overflows */
+    border-right: 2px solid #2c2f33;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: white;
+    display: block;
+    padding: 10px;
+    transition: background 0.3s;
+}
+
+.sidebar a:hover {
+    background: #444;
+}
+
+.container-wrapper {
+    display: flex;  /* Enables sidebar and content to be flexible */
+}
+
+.main-content {
+    flex-grow: 1; /* Takes the remaining space */
+    padding: 20px;
+    overflow-y: auto; /* Allows content to scroll */
+    background: white;
+    min-height: 100vh;
+}
+
+/* Progress bar styling */
+.progress-bar {
+    background-color: green;
+    height: 10px;
+    border-radius: 5px;
+    transition: width 0.5s ease-in-out;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container-wrapper {
+        flex-direction: column; /* Stack sidebar above content */
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .main-content {
+        width: 100%;
+    }
+}
+----------------------------------------------------------------------------------------------------
+(mycourse.component.ts)
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+
+
+@Component({
+  selector: 'app-mycourse',
+  standalone: false,
+  
+  templateUrl: './mycourse.component.html',
+  styleUrls: ['./mycourse.component.css'] 
+})
+export class MycourseComponent implements OnInit {
+
+  chapters: any[] = [];
+  selectedChapter: any = null;
+  progress: number = 0;
+  videos: any[] = [];
+  jsonServerUrl = 'http://localhost:3000/videos';
+course: any;
+  
+
+  
+  
+
+  constructor(private http: HttpClient) {}
+
+  
+
+  ngOnInit(): void {
+    this.fetchChapters();
+    this.http.get<any[]>(this.jsonServerUrl).subscribe(data => {
+      this.videos = data;
+    });
+    
+  }
+
+  fetchChapters() {
+    this.http.get<any[]>('http://localhost:3000/chapters').subscribe(data => {
+      this.chapters = data;
+      this.calculateProgress();
+    });
+  }
+
+  selectChapter(chapter: any) {
+    this.selectedChapter = chapter;
+    this.markAsWatched(chapter);
+  }
+
+  markAsWatched(chapter: any) {
+    chapter.watched = true;
+    this.http.put(`http://localhost:3000/chapters/${chapter.id}`, chapter)
+      .subscribe(() => this.calculateProgress());
+  }
+
+  calculateProgress() {
+    const watchedCount = this.chapters.filter(ch => ch.watched).length;
+    this.progress = (watchedCount / this.chapters.length) * 100;
+  }
+
+}
+------------------------------------------------------------------------------------------------
+(userlayout.component.html)
+<header>
+    <nav class="navbar navbar-light bg-dark">
+      <ul class="nav justify-content-start">
+        <li class="nav-item">
+          <small class="me-3 text-light">
+            <i class="bi bi-geo-alt"></i> Pimpri Chinchwad New Town, Software Development Pune, Maharashtra
+          </small>
+        </li>
+        <li class="nav-item">
+          <small class="me-3 text-light">
+            <i class="bi bi-telephone"></i> +91 9970584464
+          </small>
+        </li>
+        <li class="nav-item">
+          <small class="text-light">
+            <i class="bi bi-envelope"></i> Voidmaingmail.com
+          </small>
+        </li>
+  
+        <li class="nav-item">
+          <a class="nav-link text-light" href="/signup">Signup</a>
+        </li>
+        <li class="nav-item">
+  
+          <a class="nav-link text-light" href="/login">Login</a>
+        </li>
+  
+        <button routerLink="/login" class="btn btn-link">Logout</button>
+  
+        <div class="search-bar">
+          <input type="text" placeholder="Search..." />
+          <button>🔍</button>
+        </div>
+      </ul>
+    </nav>
+  </header>
+  
+  <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+    <a class="navbar-brand text-light" href="#">Void Main</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item">
+          <a class="nav-link text-light" routerLink="/home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" routerLink="/course-details">Course Details</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" routerLink="/webinar">Webinar</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" routerLink="/feedbacks">Feedbacks</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" routerLink="/contact">Contact</a>
+        </li>
+  
+      </ul>
+    </div>
+  </nav>
+  
+  <router-outlet></router-outlet>
+  
+  <footer class="bg-dark text-light py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4">
+          <h3>Coding Yaar</h3>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+          <p>09876543221</p>
+          <p>1234567890</p>
+        </div>
+        <div class="col">
+          <h4>Menu</h4>
+          <ul class="list-unstyled">
+            <li><a href="#" class="text-decoration-none text-light">Link</a></li>
+            <li><a href="#" class="text-decoration-none text-light">Link</a></li>
+            <li><a href="#" class="text-decoration-none text-light">Link</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 text-lg-end">
+          <h4>Social Media</h4>
+          <a href="#" class="text-decoration-none text-light"><i class="bi bi-envelope fs-4 me-2"></i></a>
+          <a href="#" class="text-decoration-none text-light"><i class="bi bi-instagram fs-4 me-2"></i></a>
+        </div>
+      </div>
+      <div class="d-flex justify-content-between">
+        <p>2024 Coding Yaar. All Rights Reserved.</p>
+        <div>
+          <a href="#" class="text-decoration-none text-light me-3">Terms of Use</a>
+          <a href="#" class="text-decoration-none text-light">Privacy Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer> 
+--------------------------------------------------------------------------------------------------------------------------------
+(userlayout.component.css)
+/* For screens smaller than 480px (Mobile devices) */
+@media (max-width: 480px) {
+    /* Navbar */
+    .navbar-nav .nav-item {
+      padding-right: 5px;
+    }
+  
+    .search-bar input {
+      width: 150px;
+    }
+  
+    footer h3, footer h4 {
+      font-size: 18px;
+    }
+  
+    footer p {
+      font-size: 14px;
+    }
+  
+    footer .d-flex {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    footer .d-flex div {
+      margin-top: 10px;
+    }
+  
+    footer .text-light {
+      font-size: 14px;
+    }
+  
+    .navbar-toggler {
+      display: block;
+    }
+  
+    .navbar-toggler-icon {
+      background-color: #007bff;
+    }
+  
+    footer ul {
+      display: block;
+      text-align: center;
+    }
+  
+    footer ul li {
+      margin-bottom: 8px;
+    }
+  
+    footer .col-lg-3.text-lg-end {
+      text-align: center;
+    }
+  }
+--------------------------------------------------------------------------------------------------
+(userlayout.component.ts)
+
+//import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+//import { RouterModule } from '@angular/router';
+
+@Component({
+  selector: 'app-userlayout',
+  // imports: [CommonModule,RouterModule ],
+  standalone: false,
+  templateUrl: './userlayout.component.html',
+  styleUrl: './userlayout.component.css'
+})
+export class UserlayoutComponent {
+
+}
+-----------------------------------------------------------------------------------------------------
+video-display.component.html
+<h2>Available Course Videos</h2>
+
+<div class="video-list">
+  <div class="video-item" *ngFor="let video of videos">
+    <h3>{{ video.videoTitle }}</h3>
+    <p>{{ video.videoDescription }}</p>
+    <video width="560" height="315" controls>
+      <source [src]="video.videoUrl" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+</div>
+------------------------------------------------------------------------------------------------------
+video-dispaly.component.ts
+import { Component, OnInit } from '@angular/core';
+
+import { HttpClient } from '@angular/common/http';
+
+@Component({
+  selector: 'app-video-display',
+  standalone: false,
+  templateUrl: './video-display.component.html',
+  styleUrl: './video-display.component.css'
+})
+export class VideoDisplayComponent implements OnInit {
+  videos: any[] = [];
+  jsonServerUrl = 'http://localhost:3000/videos';
+
+  constructor(private http: HttpClient) {}
+
+  ngOnInit() {
+    this.http.get<any[]>(this.jsonServerUrl).subscribe(data => {
+      this.videos = data;
+    });
+  }
+  
+}
+-------------------------------------------------------------------------------------------------------------
+video-display.component.css
+.video-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 400px;
+  }
+  
+  .video-form input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .video-form button {
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .video-form button:hover {
+    background-color: #218838;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  table, th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+  
+  .thumbnail {
+    width: 100px;
+    height: 60px;
+  }
+  
+  .video-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .video-item {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 5px;
+    width: 600px;
+  }
+  
+  .video-item h3 {
+    margin: 0;
+  }
+  -----------------------------------------------------------------------------------------------

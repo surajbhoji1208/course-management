@@ -1,0 +1,59 @@
+<!-- Sidebar -->
+<div class="sidebar">
+    <h5 class="text-center">Course Videos</h5>
+    <ul class="list-group list-group-flush">
+        <li *ngFor="let chapter of chapters" class="list-group-item bg-transparent">
+            <a href="#" class="text-light" (click)="selectChapter(chapter)">
+                {{ chapter.id }}. {{ chapter.name }}
+            </a>
+            <span class="badge float-end" [ngClass]="{'bg-success': chapter.watched, 'bg-warning': !chapter.watched}">
+                {{ chapter.watched ? 'Watched' : 'New' }}
+            </span>
+        </li>
+    </ul>
+</div>
+
+
+
+<!-- Main Content -->
+<div class="main-content">
+    <div class="container">
+        <h3 class="mb-4">Now Playing: {{ selectedChapter?.name }}</h3>
+        <div class="ratio ratio-16x9">
+            <iframe *ngIf="selectedChapter" [src]="selectedChapter.video" frameborder="0" allowfullscreen></iframe>
+        </div>
+
+        <!-- <button routerLink="/video-display">See Videos</button> -->
+
+
+        <h2>Available Course Videos</h2>
+
+<div class="video-list">
+  <div class="video-item" *ngFor="let video of videos">
+    <h3>{{ video.videoTitle }}</h3>
+    <p>{{ video.videoDescription }}</p>
+    <video width="560" height="315" controls>
+      <source [src]="video.videoUrl" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+</div> 
+
+
+        <!-- Video Description -->
+        <div class="video-description mt-4">
+            <h5>Lesson Description</h5>
+            <p>{{ selectedChapter?.desc }}</p>
+            <hr>
+            <h6>Course Progress</h6>
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" 
+                     [style.width]="progress + '%'" aria-valuenow="25" 
+                     aria-valuemin="0" aria-valuemax="100">
+                    {{ progress }}%
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

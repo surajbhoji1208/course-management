@@ -1,0 +1,61 @@
+<div class="admin-container">
+  <h2>Create Course</h2>
+  <form (ngSubmit)="createCourse()">
+    <label>Course Name</label>
+    <input type="text" [(ngModel)]="courseName" name="courseName" required>
+
+    <label>Course Description</label>
+    <input type="text" [(ngModel)]="courseDesc" name="courseDesc" required>
+
+    <!-- <label>Video URL</label>
+    <input type="text" [(ngModel)]="videoUrl" name="videoUrl" required> -->
+
+    <label>Course Image URL</label>
+    <input type="text" [(ngModel)]="courseImage" name="courseImage" required>
+
+    <label>Price</label>
+    <input type="number" [(ngModel)]="coursePrice" name="coursePrice" required>
+
+    <label>Old Price</label>
+    <input type="number" [(ngModel)]="coursePrice" name="courseOldPrice">
+
+    
+
+   
+    <button type="submit">Create Course</button> 
+  </form>
+
+  <!-- Admin Course Management -->
+  <h2>Manage Courses</h2>
+  <div *ngIf="courses.length > 0; else noCourses">
+    <ul>
+      <li *ngFor="let course of courses">
+        <div class="course-card">
+          <img [src]="course.image" alt="Course Image" class="course-img">
+          <div class="course-content">
+            <h3>{{ course.name }}</h3>
+            <p>{{ course.course_desc }}</p>
+            <a [href]="course.video" target="_blank">Watch Video</a>
+
+            <div class="course-info">
+              <span class="price">₹{{ course.price }}</span>
+              <span class="old-price">₹{{ course.old_price }}</span>
+              <span class="rating">⭐ {{ course.rating }} ({{ course.reviews }})</span>
+            </div>
+          
+            <!-- Edit and Delete Buttons -->
+            <div class="actions">
+              <button (click)="editCourse(course)">Edit</button>
+              <button (click)="deleteCourse(course.id)">Delete</button>
+              <button routerLink="/java-course">View Details</button>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <ng-template #noCourses>
+    <p>No courses available.</p>
+  </ng-template>
+</div>              

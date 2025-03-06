@@ -1,0 +1,53 @@
+/* For screens smaller than 480px (Mobile devices) */
+@media (max-width: 480px) {
+    /* Navbar */
+    .navbar-nav .nav-item {
+      padding-right: 5px;
+    }
+  
+    .search-bar input {
+      width: 150px;
+    }
+  
+    footer h3, footer h4 {
+      font-size: 18px;
+    }
+  
+    footer p {
+      font-size: 14px;
+    }
+  
+    footer .d-flex {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    footer .d-flex div {
+      margin-top: 10px;
+    }
+  
+    footer .text-light {
+      font-size: 14px;
+    }
+  
+    .navbar-toggler {
+      display: block;
+    }
+  
+    .navbar-toggler-icon {
+      background-color: #007bff;
+    }
+  
+    footer ul {
+      display: block;
+      text-align: center;
+    }
+  
+    footer ul li {
+      margin-bottom: 8px;
+    }
+  
+    footer .col-lg-3.text-lg-end {
+      text-align: center;
+    }
+  }

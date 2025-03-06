@@ -1,0 +1,188 @@
+{
+  "signup": [
+    {
+      "id": "1",
+      "name": "user123",
+      "email": "user123@gmail.com",
+      "password": "user123",
+      "address": "Pune",
+      "role": "user"
+    },
+    {
+      "id": "2",
+      "name": "admin",
+      "email": "admin@gmail.com",
+      "password": "admin123",
+      "address": "Pune",
+      "role": "admin"
+    }
+  ],
+  "login_users": [
+    {
+      "id": "1",
+      "email": "user123@gmail.com",
+      "password": "user123"
+    }
+  ],
+  "login_admins": [
+    {
+      "id": "2",
+      "email": "admin@gmail.com",
+      "password": "admin123"
+    }
+  ],
+  "courses": [
+    {
+      "id": "3b9a",
+      "name": "Java",
+      "course_desc": "Java is a full-stack development course.",
+      "image": "https://example.com/java-course.jpg",
+      "price": 999,
+      "old_price": 1499,
+      "progress": 0
+    },
+    {
+      "id": "ai_ml",
+      "name": "AI ML",
+      "course_desc": "AI is future of artificial intelligence",
+      "courseImage": "data:image/jpeg;base64,...",
+      "price": 7800,
+      "old_price": 7000,
+      "progress": 0
+    },
+    {
+      "id": "python_fs",
+      "name": "Python",
+      "course_desc": "Python is a full-stack developer course.",
+      "courseImage": "data:image/jpeg;base64,...",
+      "price": 3000,
+      "old_price": 2500,
+      "progress": 0
+    }
+  ],
+  "users": [],
+  "chapters": [
+    {
+      "id": "102",
+      "course_id": "3b9a",
+      "name": "HTML Basics",
+      "desc": "Explore HTML tags, attributes, and document structure.",
+      "video": "https://www.youtube.com/embed/xyz123",
+      "watched": true,
+      "quiz": {
+        "id": 202,
+        "question": "Which HTML tag is used to create a hyperlink?",
+        "type": "MCQ",
+        "options": [
+          "<link>",
+          "<a>",
+          "<href>",
+          "<url>"
+        ],
+        "correct_answer": "<a>"
+      }
+    },
+    {
+      "id": "948",
+      "course_id": "ai_ml",
+      "name": "HTML Node",
+      "desc": "HTML is Node5",
+      "watched": false,
+      "video": "",
+      "quiz": {
+        "id": 0,
+        "question": "",
+        "options": [],
+        "correct_answer": ""
+      }
+    },
+    {
+      "id": "406",
+      "course_id": "python_fs",
+      "name": "Python Basics",
+      "desc": "Python is a programming language.",
+      "watched": false,
+      "video": "",
+      "quiz": {
+        "id": 0,
+        "question": "",
+        "options": [],
+        "correct_answer": ""
+      }
+    },
+    {
+      "id": "909",
+      "course_id": "3b9a",
+      "name": "Java Advanced Topics",
+      "desc": "Deep dive into Java programming.",
+      "watched": false,
+      "video": "",
+      "quiz": {
+        "id": 0,
+        "question": "",
+        "options": [],
+        "correct_answer": ""
+      }
+    },
+    {
+      "id": "575",
+      "course_id": "ai_ml",
+      "name": "AI Fundamentals",
+      "desc": "Introduction to Artificial Intelligence.",
+      "watched": false,
+      "video": "",
+      "quiz": {
+        "id": 0,
+        "question": "",
+        "options": [],
+        "correct_answer": ""
+      }
+    },
+    {
+      "id": 712,
+      "course_id": "",
+      "name": "",
+      "desc": "",
+      "watched": false,
+      "video": "",
+      "quiz": {
+        "id": 0,
+        "question": "",
+        "options": [],
+        "correct_answer": ""
+      }
+    },
+    {
+      "id": 908,
+      "course_id": "",
+      "name": "",
+      "desc": "",
+      "watched": false,
+      "video": "",
+      "quiz": {
+        "id": 0,
+        "question": "",
+        "options": [],
+        "correct_answer": ""
+      }
+    }
+  ],
+  "videos": [
+    {
+      "id": "6ded",
+      "videoTitle": "Artificial Intelligence",
+      "videoDescription": "Introduction to AI",
+      "videoUrl": "https://youtu.be/_Ah2ww7aHRk?si=JWAfeupQwC9EewUx",
+      "videoThumbnail": "https://example.com/ai-thumbnail.jpg",
+      "totalDuration": "4-5 min"
+    },
+    {
+      "id": "ae38",
+      "videoTitle": "Java",
+      "videoDescription": "Java is a full-stack language",
+      "videoUrl": "https://youtu.be/UmnCZ7-9yDY?si=Ni1oWYYcp0pcBLQs",
+      "videoThumbnail": "https://www.w3schools.com/java/",
+      "totalDuration": "5 months"
+    }
+  ]
+}
