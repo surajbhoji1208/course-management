@@ -1,53 +1,66 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, FormArray, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-java-course',
-  standalone: false,
+  standalone: true,
   templateUrl: './java-course.component.html',
-  styleUrl: './java-course.component.css'
+  styleUrl: './java-course.component.css',
+  imports:[FormsModule,ReactiveFormsModule]
 })
 export class JavaCourseComponent implements OnInit{
-  chapters: any[] = [];
+  courseForm: FormGroup;
 
-  constructor(private http: HttpClient) {}
+  constructor(private fb: FormBuilder, private http: HttpClient) {
+    this.courseForm = this.fb.group({
+      chapters: this.fb.array([])
+    });
+  }
 
   ngOnInit(): void {
     this.fetchChapters();
   }
 
+  get chapters() {
+    return this.courseForm.get('chapters') as FormArray;
+  }
+
   fetchChapters() {
     this.http.get<any[]>('http://localhost:3000/chapters').subscribe(data => {
-      this.chapters = data;
+      data.forEach(chapter => {
+        this.chapters.push(this.fb.group({
+          id: chapter.id,
+          course_id: chapter.course_id,
+          name: chapter.name,
+          desc: chapter.desc
+        }));
+      });
     });
   }
 
-  updateChapter(chapter: any) {
+  addChapter() {
+    const newChapter = this.fb.group({
+      id: Math.floor(Math.random() * 1000),
+      course_id: '',
+      name: '',
+      desc: ''
+    });
+
+    this.chapters.push(newChapter);
+  }
+
+  updateChapter(index: number) {
+    const chapter = this.chapters.at(index).value;
     this.http.put(`http://localhost:3000/chapters/${chapter.id}`, chapter)
       .subscribe(() => alert('Chapter Updated!'));
   }
 
-  deleteChapter(id: number) {
-    this.http.delete(`http://localhost:3000/chapters/${id}`)
+  deleteChapter(index: number) {
+    const chapter = this.chapters.at(index).value;
+    this.http.delete(`http://localhost:3000/chapters/${chapter.id}`)
       .subscribe(() => {
-        this.chapters = this.chapters.filter(ch => ch.id !== id);
+        this.chapters.removeAt(index);
       });
   }
-
-  addChapter() {
-    const newChapter = {
-      id: Math.floor(Math.random() * 1000),
-      course_id: '',
-      name: '',
-      desc: '',
-      watched: false,
-      video: '',
-      quiz: { id: 0, question: '', options: [], correct_answer: '' }
-    };
-
-    this.http.post('http://localhost:3000/chapters', newChapter)
-      .subscribe(() => {
-        this.chapters.push(newChapter);
-      });
-  } 
 }
