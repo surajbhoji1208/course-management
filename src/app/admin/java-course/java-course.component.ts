@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
+import { retry } from 'rxjs';
 
 @Component({
   selector: 'app-java-course',
@@ -41,9 +42,9 @@ export class JavaCourseComponent implements OnInit{
    addChapter() {
      const newChapter = this.fb.group({
        id: Math.floor(Math.random() * 1000),
-       course_id: '',
-       name: '',
-       desc: ''
+       course_id: [null,Validators.required],
+       name: [null,Validators.required],
+       desc: [null,Validators.required]
      });
  
      this.chapters.push(newChapter);
@@ -56,10 +57,16 @@ export class JavaCourseComponent implements OnInit{
    }
  
    deleteChapter(index: number) {
-     const chapter = this.chapters.at(index).value;
-     this.http.delete(`http://localhost:3000/chapters/${chapter.id}`)
-       .subscribe(() => {
-         this.chapters.removeAt(index);
-       });
+    const chapter = this.chapters.at(index);
+    const isValid = Object.values(chapter).some(value => value === null && value === '');
+    console.log(isValid);
+    
+    if (isValid) {
+      this.http.delete(`http://localhost:3000/chapters/${chapter.value?.course_id}`).subscribe(() => {
+        this.chapters.removeAt(index); // Remove from FormArray after deletion
+      });
+    } else {
+      this.chapters.removeAt(index); // Just remove from FormArray if not saved in DB
+    }
    }
 }
