@@ -10,63 +10,75 @@ import { retry } from 'rxjs';
   styleUrl: './java-course.component.css'
 })
 export class JavaCourseComponent implements OnInit{
-   courseForm: FormGroup;
- 
-   constructor(private fb: FormBuilder, private http: HttpClient) {
-     this.courseForm = this.fb.group({
-       chapters: this.fb.array([])
-     });
-   }
- 
-   ngOnInit(): void {
-     this.fetchChapters();
-   }
- 
-   get chapters() {
-     return this.courseForm.get('chapters') as FormArray;
-   }
- 
-   fetchChapters() {
-     this.http.get<any[]>('http://localhost:3000/chapters').subscribe(data => {
-       data.forEach(chapter => {
-         this.chapters.push(this.fb.group({
-           id: chapter.id,
-           course_id: chapter.course_id,
-           name: chapter.name,
-           desc: chapter.desc
-         }));
-       });
-     });
-   }
- 
-   addChapter() {
-     const newChapter = this.fb.group({
-       id: Math.floor(Math.random() * 1000),
-       course_id: [null,Validators.required],
-       name: [null,Validators.required],
-       desc: [null,Validators.required]
-     });
- 
-     this.chapters.push(newChapter);
-   }
- 
-   updateChapter(index: number) {
-     const chapter = this.chapters.at(index).value;
-     this.http.put(`http://localhost:3000/chapters/${chapter.id}`, chapter)
-       .subscribe(() => alert('Chapter Updated!'));
-   }
- 
-   deleteChapter(index: number) {
-    const chapter = this.chapters.at(index);
-    const isValid = Object.values(chapter).some(value => value === null && value === '');
-    console.log(isValid);
+  courseForm: FormGroup;
+
+  constructor(private fb: FormBuilder, private http: HttpClient) {
+    this.courseForm = this.fb.group({
+      chapters: this.fb.array([])
+    });
+  }
+
+  ngOnInit(): void {
+    this.fetchChapters();
+  }
+
+  get chapters() {
+    return this.courseForm.get('chapters') as FormArray;
+  }
+
+  fetchChapters() {
+    this.http.get<any[]>('http://localhost:3000/chapters').subscribe(data => {
+      data.forEach(chapter => {
+        this.chapters.push(this.fb.group({
+          id: [chapter.id],
+          course_id: [chapter.course_id, Validators.required],
+          name: [chapter.name, Validators.required],
+          desc: [chapter.desc, Validators.required],
+          isNew: [false] // Indicates existing chapter
+        }));
+      });
+    });
+  }
+
+  addChapter() {
+    const newChapter = this.fb.group({
+      id: Math.floor(Math.random() * 1000),
+      course_id: [null, Validators.required],
+      name: [null, Validators.required],
+      desc: [null, Validators.required],
+      isNew: [true] // Indicates new chapter
+    });
+
+    this.chapters.push(newChapter);
+  }
+
+  saveChapter(index: number) {
+    const chapter = this.chapters.at(index).value;
     
-    if (isValid) {
-      this.http.delete(`http://localhost:3000/chapters/${chapter.value?.course_id}`).subscribe(() => {
-        this.chapters.removeAt(index); // Remove from FormArray after deletion
+    if (chapter.isNew) {
+      // Add new chapter to backend
+      this.http.post('http://localhost:3000/chapters', chapter).subscribe(response => {
+        alert('Chapter Added!');
+        this.chapters.at(index).patchValue({ isNew: false }); // Mark as existing chapter
       });
     } else {
-      this.chapters.removeAt(index); // Just remove from FormArray if not saved in DB
+      // Update existing chapter
+      this.http.put(`http://localhost:3000/chapters/${chapter.id}`, chapter)
+        .subscribe(() => alert('Chapter Updated!'));
     }
-   }
+  }
+
+  deleteChapter(index: number) {
+    const chapter = this.chapters.at(index).value;
+
+    if (!chapter.isNew) {
+      // Delete only if it exists in the database
+      this.http.delete(`http://localhost:3000/chapters/${chapter.id}`).subscribe(() => {
+        this.chapters.removeAt(index); // Remove from form after deletion
+      });
+    } else {
+      // Just remove from the form if not saved in DB
+      this.chapters.removeAt(index);
+    }
+  }
 }

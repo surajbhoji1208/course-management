@@ -2,39 +2,39 @@
     <h2 class="text-center">Admin Panel - Manage Chapters------</h2>
     
     <form [formGroup]="courseForm">
-        <div formArrayName="chapters">
-          <div *ngFor="let chapter of chapters.controls; let i = index" [formGroupName]="i" class="chapter-container">
-            
-            <div class="input-group">
-              <label for="id-{{ i }}">ID</label>
-              <input id="id-{{ i }}" formControlName="id" readonly>
-            </div>
-      
-            <div class="input-group">
-              <label for="course-id-{{ i }}">Course ID</label>
-              <input id="course-id-{{ i }}" formControlName="course_id" placeholder="Enter Course ID">
-            </div>
-      
-            <div class="input-group">
-              <label for="name-{{ i }}">Chapter Name</label>
-              <input id="name-{{ i }}" formControlName="name" placeholder="Chapter Name">
-            </div>
-      
-            <div class="input-group">
-              <label for="desc-{{ i }}">Description</label>
-              <input id="desc-{{ i }}" formControlName="desc" placeholder="Description">
-            </div>
-      
-            <div class="button-group">
-              <button class="save" (click)="updateChapter(i)">Save</button>
-              <button class="delete" (click)="deleteChapter(i)">Delete</button>
-            </div>
+      <div formArrayName="chapters">
+        <div *ngFor="let chapter of chapters.controls; let i = index" [formGroupName]="i" class="chapter-container">
+          
+          <div class="input-group">
+            <label for="id-{{ i }}">ID</label>
+            <input id="id-{{ i }}" formControlName="id" readonly>
+          </div>
+    
+          <div class="input-group">
+            <label for="course-id-{{ i }}">Course ID</label>
+            <input id="course-id-{{ i }}" formControlName="course_id" placeholder="Enter Course ID">
+          </div>
+    
+          <div class="input-group">
+            <label for="name-{{ i }}">Chapter Name</label>
+            <input id="name-{{ i }}" formControlName="name" placeholder="Chapter Name">
+          </div>
+    
+          <div class="input-group">
+            <label for="desc-{{ i }}">Description</label>
+            <input id="desc-{{ i }}" formControlName="desc" placeholder="Description">
+          </div>
+    
+          <div class="button-group">
+            <button class="save" (click)="saveChapter(i)">Save</button>
+            <button class="delete" (click)="deleteChapter(i)">Delete</button>
           </div>
         </div>
-      </form>
-      
-      <button class="add-button" (click)="addChapter()">Add New Chapter</button>
-      <button routerLink="/video">View Video</button>
+      </div>
+    </form>
+    
+    <button class="add-button" (click)="addChapter()">Add New Chapter</button>
+    <button routerLink="/video">View Video</button>
       
       
 </div>
